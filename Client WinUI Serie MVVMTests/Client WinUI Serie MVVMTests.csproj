@@ -4,6 +4,7 @@
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <RootNamespace>Client_WinUI_Serie_MVVMTests</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
+	<WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>

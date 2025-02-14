@@ -31,4 +31,6 @@ public partial class Serie
     [Column("network")]
     [StringLength(50)]
     public string? Network { get; set; }
+
+
 }
