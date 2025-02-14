@@ -21,19 +21,42 @@ namespace Client_WinUI_Serie_MVVM.Services
     {
         private readonly HttpClient httpClient;
 
-        public WSService(string baseUri)
+        private HttpClient client;
+
+        public HttpClient Client
         {
-            httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(baseUri)
-            };
-
-            httpClient.BaseAddress = new Uri("http://localhost:5250/api/");
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
+            get { return client; }
+            set { client = value; }
         }
+
+        public WSService()
+        {
+            Client = new HttpClient();
+            Client.BaseAddress = new Uri("http://localhost:5223/api");
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
+            );
+        }
+
+        public WSService(string uri)
+        {
+            Client = new HttpClient();
+            if (Uri.TryCreate(uri, UriKind.Absolute, out Uri baseUri))
+            {
+                Client.BaseAddress = baseUri;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid URI provided.", nameof(uri));
+            }
+
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
+            );
+        }
+
 
         public async Task<List<Serie>> GetSerieAsync(string nomControleur)
         {
@@ -75,15 +98,17 @@ namespace Client_WinUI_Serie_MVVM.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                // Convertir l'objet 'nouvelleSerie' en JSON
-                string jsonContent = JsonSerializer.Serialize(nouvelleSerie);
-                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                // Envoyer la requête POST
-                HttpResponseMessage response = await client.PostAsync("api/series", content);
+                HttpResponseMessage response = await client.PostAsJsonAsync<Serie>("api/series", nouvelleSerie);
 
-                // Vérifier si la requête a réussi
-                return response.IsSuccessStatusCode; // ou response.EnsureSuccessStatusCode() si vous préférez lever une exception en cas d'échec
+                if (response.IsSuccessStatusCode)
+                {
+                    return true; 
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
         public async Task<bool> PutSerieAsync(int serieId, Serie serieMiseAJour)
