@@ -31,23 +31,8 @@ namespace Client_WinUI_Serie_MVVM
         public MainWindow()
         {
             this.InitializeComponent();
-            this.DataContext = new AddSerieViewModel();
         }
 
-        private void AjouterSerie(object sender, RoutedEventArgs e)
-        {
-            Serie serie = new Serie 
-            {
-                
-                Titre = TextBoxTitre.Text,
-                Resume = TextBoxResume.Text,
-                Nbsaisons = Convert.ToInt16(BoxNbsaisons.Text),
-                Nbepisodes = Convert.ToInt16(BoxNbepisodes.Text),
-                Anneecreation = Convert.ToInt16(BoxAnneeCreation.Text),
-                Network = BoxChaine.Text
-
-            };
-             bool result = WSService.PostSerieAsync(serie);
-        }
+        
     }
 }
