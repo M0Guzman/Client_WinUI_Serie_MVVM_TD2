@@ -32,7 +32,7 @@ namespace Client_WinUI_Serie_MVVM.Services
         public WSService()
         {
             Client = new HttpClient();
-            Client.BaseAddress = new Uri("http://localhost:5223/api");
+            Client.BaseAddress = new Uri("http://localhost:5062/api/");
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
@@ -58,86 +58,61 @@ namespace Client_WinUI_Serie_MVVM.Services
         }
 
 
-        public async Task<List<Serie>> GetSerieAsync(string nomControleur)
+        public async Task<List<Serie>> GetSerieAsync()
         {
             try
             {
-                return await httpClient.GetFromJsonAsync<List<Serie>>(nomControleur);
+                return await Client.GetFromJsonAsync<List<Serie>>("series");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                
                 return null;
             }
+            
 
         }
 
-        public async Task<Serie> GetSerieAsync(int serieId)
+        public async Task<Serie> GetSerieAsync(string nomControleur, int serieId)
         {
-            string url = string.Concat("api/series/", serieId.ToString());
 
-            using (HttpClient client = new HttpClient())
+            try
             {
-                HttpResponseMessage response = await client.GetAsync(url);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string jsonString = await response.Content.ReadAsStringAsync();
-
-                    Serie serie = JsonSerializer.Deserialize<Serie>(jsonString);
-
-                    return serie;
-                }
-                else
-                {
-                    throw new Exception("Erreur lors de la récupération de la série.");
-                }
+                return await Client.GetFromJsonAsync<Serie>(string.Concat(nomControleur,"/",serieId));
             }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            
         }
         public async Task<bool> PostSerieAsync(Serie nouvelleSerie)
         {
-            using (HttpClient client = new HttpClient())
-            {
+            // Envoyer la requête POST
+            HttpResponseMessage response = await Client.PostAsJsonAsync<Serie>($"series/{nouvelleSerie.Serieid}", nouvelleSerie);
 
-                HttpResponseMessage response = await client.PostAsJsonAsync<Serie>("api/series", nouvelleSerie);
+            // Vérifier si la requête a réussi
+            return true;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return true; 
-                }
-                else
-                {
-                    return false;
-                }
-            }
         }
         public async Task<bool> PutSerieAsync(int serieId, Serie serieMiseAJour)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                // Convertir l'objet 'serieMiseAJour' en JSON
-                string jsonContent = JsonSerializer.Serialize(serieMiseAJour);
-                StringContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            // Envoyer la requête PUT
+            HttpResponseMessage response = await Client.PutAsJsonAsync<Serie>($"series/{serieId}", serieMiseAJour);
 
-                // Envoyer la requête PUT
-                HttpResponseMessage response = await client.PutAsync($"api/series/{serieId}", content);
+            // Vérifier si la requête a réussi
+            return true;
 
-                // Vérifier si la requête a réussi
-                return response.IsSuccessStatusCode; // ou response.EnsureSuccessStatusCode() si vous préférez lever une ex
-
-            }
         }
 
         public async Task<bool> DeleteSerieAsync(int serieId)
         {
-            using (HttpClient client = new HttpClient())
-            {
+           
                 // Envoyer la requête DELETE
-                HttpResponseMessage response = await client.DeleteAsync($"api/series/{serieId}");
+                HttpResponseMessage response = await Client.DeleteAsync($"series/{serieId}");
 
                 // Vérifier si la requête a réussi
                 return response.IsSuccessStatusCode; // ou response.EnsureSuccessStatusCode() si vous préférez lever une exception en cas d'échec
-            }
+            
         }
 
 

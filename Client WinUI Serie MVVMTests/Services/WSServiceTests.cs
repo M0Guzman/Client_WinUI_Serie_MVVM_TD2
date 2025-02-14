@@ -30,7 +30,6 @@ namespace Client_WinUI_Serie_MVVM.Services.Tests
                 Network = "Netflix"
             };
 
-            HttpClient client = new HttpClient();
             WSService wsService = new WSService(); // Pass the HttpClient instance
 
             var result = await wsService.PostSerieAsync(serie);
@@ -38,48 +37,39 @@ namespace Client_WinUI_Serie_MVVM.Services.Tests
             Assert.IsTrue(result);
         }
 
-
         [TestMethod()]
-        public async Task PostSerieNoTestAsync()
+        public async Task PutSerieAsyncTest()
         {
             Serie serie = new Serie
             {
                 Serieid = 601,
                 Titre = "Scrubs",
                 Resume = "resume",
-                Nbsaisons = 2,
-                Nbepisodes = 24,
+                Nbsaisons = 3,
+                Nbepisodes = 36,
                 Anneecreation = 2024,
                 Network = "Netflix"
             };
 
-            HttpClient client = new HttpClient();
-            WSService wsService = new WSService();
+           WSService wsService = new WSService(); // Pass the HttpClient instance
 
-            var result = await wsService.PostSerieAsync(serie);
-            string val = result.ToString();
-            Assert.IsFalse(result,val);
+            var result = await wsService.PutSerieAsync(601,serie);
 
+            Assert.IsTrue(result);
         }
+
+        
 
         [TestMethod()]
-        public void PutSerieAsync()
+        public async Task GetSerieAsyncTest()
         {
+            string title = "Scrubs";
 
+            WSService wsService = new WSService(); // Pass the HttpClient instance
+
+            Serie serie = await wsService.GetSerieAsync("series",1);
+
+            Assert.AreEqual(title, serie.Titre, "titre get 1");
         }
-
-        [TestMethod()]
-        public void GetSerieAsync()
-        {
-
-        }
-
-        [TestMethod()]
-        public void GetSerieAsync(int id)
-        {
-
-        }
-
-
     }
 }

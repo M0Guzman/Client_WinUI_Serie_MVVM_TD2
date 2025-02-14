@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Client_WinUI_Serie_MVVM.View;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -26,6 +27,8 @@ namespace Client_WinUI_Serie_MVVM
     /// </summary>
     public partial class App : Application
     {
+        public static FrameworkElement MainRoot { get; private set; }
+        
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -41,8 +44,12 @@ namespace Client_WinUI_Serie_MVVM
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
+            Frame rootFrame = new Frame();
+            this.m_window = new MainWindow();
+            this.m_window.Content = rootFrame;
             m_window.Activate();
+            rootFrame.Navigate(typeof(AddSerie));
+            MainRoot = m_window.Content as FrameworkElement;
         }
 
         private Window m_window;

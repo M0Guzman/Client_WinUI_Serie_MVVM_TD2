@@ -10,8 +10,8 @@ namespace Client_WinUI_Serie_MVVM.Services
 {
     public interface IService
     {
-        Task<List<Serie>> GetSerieAsync(string nomControleur);
-        Task<Serie> GetSerieAsync(int serieid);
+        Task<List<Serie>> GetSerieAsync();
+        Task<Serie> GetSerieAsync(string nomControleur,int serieid);
         Task<bool> PostSerieAsync(Serie nouvelleSerie);
         Task<bool> PutSerieAsync(int serieId, Serie serieMiseAJour);
         Task<bool> DeleteSerieAsync(int serieId);

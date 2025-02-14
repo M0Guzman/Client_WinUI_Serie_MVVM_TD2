@@ -1,14 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Window
     x:Class="Client_WinUI_Serie_MVVM.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Client_WinUI_Serie_MVVM"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WinUI Desktop"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
+    <StackPanel
+        Width="500"
+        Height="500"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Background="#1E1E1E"
+        Spacing="10">
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="16"
+            Foreground="White"
+            Text="Titre" />
+        <TextBox
+            x:Name="TextBoxTitre"
+            Width="300"
+            Height="30"
+            Text="{Binding serieToAdd.Titre, Mode=TwoWay}" />
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="16"
+            Foreground="White"
+            Text="Résumé" />
+        <TextBox
+            x:Name="TextBoxResume"
+            Width="300"
+            Height="80"
+            AcceptsReturn="True"
+            Text="{Binding serieToAdd.Resume, Mode=TwoWay}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="16"
+            Foreground="White"
+            Text="Nb Saisons" />
+        <NumberBox
+            x:Name="BoxNbsaisons"
+            Width="100"
+            Text="{Binding serieToAdd.Nbsaisons, Mode=TwoWay}"
+            Value="0" />
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="16"
+            Foreground="White"
+            Text="Nb Episodes" />
+        <NumberBox
+            x:Name="BoxNbepisodes"
+            Width="100"
+            Text="{Binding serieToAdd.Nbepisodes, Mode=TwoWay}"
+            Value="0" />
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="16"
+            Foreground="White"
+            Text="Année de création" />
+        <NumberBox
+            x:Name="BoxAnneeCreation"
+            Width="100"
+            Text="{Binding serieToAdd.Anneecreation, Mode=TwoWay}"
+            Value="0" />
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="16"
+            Foreground="White"
+            Text="Chaîne" />
+        <TextBox
+            x:Name="BoxChaine"
+            Width="300"
+            Height="30"
+            Text="{Binding serieToAdd.Network, Mode=TwoWay}" />
+
+        <Button
+            x:Name="Ajouter"
+            Width="150"
+            Height="40"
+            VerticalAlignment="Center"
+            Background="Gray"
+            Click="AjouterSerie"
+            Content="Ajouter"
+            Foreground="White" />
+
     </StackPanel>
 </Window>
