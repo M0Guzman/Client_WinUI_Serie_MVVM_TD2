@@ -15,7 +15,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="View\AddSerie.xaml" />
-    <None Remove="View\UdateSerie.xaml" />
+    <None Remove="View\UpdateSerie.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +45,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="View\UdateSerie.xaml">
+    <Page Update="View\UpdateSerie.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

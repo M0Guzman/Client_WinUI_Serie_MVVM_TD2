@@ -26,12 +26,12 @@ namespace Client_WinUI_Serie_MVVM.View
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UdateSerie : Page
+    public sealed partial class UpdateSerie : Page
     {
-        public UdateSerie()
+        public UpdateSerie()
         {
             this.InitializeComponent();
-            this.DataContext = new AddSerieViewModel();
+            this.DataContext = new UpdateSerieViewModel();
         }        
     }
 }

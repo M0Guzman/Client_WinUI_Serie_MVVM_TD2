@@ -92,6 +92,14 @@
                 Command="{Binding Ajouter}"
                 Content="Ajouter"
                 Foreground="Black" />
+            <Button
+                x:Name="Modifier"
+                Width="150"
+                Height="40"
+                Background="White"
+                Command="{Binding Modifier}"
+                Content="Modifier"
+                Foreground="Black" />
 
         </StackPanel>
     </Grid>

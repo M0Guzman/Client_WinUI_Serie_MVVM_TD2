@@ -7,20 +7,21 @@ using System.Windows.Input;
 using Client_WinUI_Serie_MVVM.Models;
 using Client_WinUI_Serie_MVVM.Services;
 using Microsoft.UI.Xaml.Controls;
-using Client_WinUI_Serie_MVVM.View;
-using Microsoft.UI.Xaml;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Client_WinUI_Serie_MVVM.ViewModels
 {
-    public class AddSerieViewModel : INotifyPropertyChanged
+    public class UpdateSerieViewModel : INotifyPropertyChanged
     {
         private Serie _serieToAdd;
 
-        public AddSerieViewModel()
+        public UpdateSerieViewModel()
         {
             _serieToAdd = new Serie();
-            Ajouter = new RelayCommand(AjouterSerie);
             Modifier = new RelayCommand(ModifierSerie);
+            Supprimer = new RelayCommand(SupprimerSerie);
+            Recherche = new RelayCommand(RechercheSerie);
         }
         public Serie SerieToAdd
         {
@@ -50,31 +51,34 @@ namespace Client_WinUI_Serie_MVVM.ViewModels
 
         }
 
-        public IRelayCommand Ajouter { get;}
-        private Window m_window;
-        public static FrameworkElement MainRoot { get; private set; }
-        public async void AjouterSerie()
-        {
-           
-            
-            WSService servise = new WSService("http://localhost:5062/api/");
-            bool result = await servise.PostSerieAsync(SerieToAdd);
-            if(result == true)
-                MessageAsync("Confirmation", "Vous avez ajouter une nouvelle serie");
-        }
-        public IRelayCommand Modifier { get; }
+        public IRelayCommand Modifier { get;}
+        
         public async void ModifierSerie()
         {
-            Frame rootFrame = new Frame();
-            this.m_window = new MainWindow();
-            this.m_window.Content = rootFrame;
-            m_window.Activate();
-            rootFrame.Navigate(typeof(AddSerie));
-            MainRoot = m_window.Content as FrameworkElement;
+            WSService servise = new WSService("http://localhost:5062/api/");
+            bool result = await servise.PutSerieAsync(SerieToAdd.Serieid,SerieToAdd);
+            if (result == true)
+                MessageAsync("Confirmation", "Vous avez modifier une nouvelle serie");
         }
 
-        
-    }
+        public IRelayCommand Supprimer { get; }
 
-}    
+        public async void SupprimerSerie()
+        {
+            WSService servise = new WSService("http://localhost:5062/api/");
+            bool result = await servise.DeleteSerieAsync(SerieToAdd.Serieid);
+            if (result == true)
+                MessageAsync("Confirmation", "Vous avez supprimer une nouvelle serie");
+        }
 
+        public IRelayCommand Recherche { get; }
+
+        public async void RechercheSerie()
+        {
+            WSService servise = new WSService("http://localhost:5062/api/");
+            Task<Serie> result = servise.GetSerieAsync("series",SerieToAdd.Serieid);
+            
+        }
+
+    }    
+}

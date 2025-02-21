@@ -17,6 +17,20 @@
             VerticalAlignment="Center"
             Spacing="10">
 
+            <TextBox
+                x:Name="BoxChaine"
+                Width="300"
+                Height="30"
+                Text="{Binding serieToAdd.IdSerie, Mode=TwoWay}" />
+            <Button
+                x:Name="Recherche"
+                Width="150"
+                Height="40"
+                Background="White"
+                Command="{Binding Recherche}"
+                Content="Recherche"
+                Foreground="Black" />
+
             <TextBlock
                 HorizontalAlignment="Center"
                 FontSize="16"
@@ -84,14 +98,29 @@
                 Width="300"
                 Height="30"
                 Text="{Binding serieToAdd.Network, Mode=TwoWay}" />
-            <Button
-                x:Name="Ajouter"
-                Width="150"
-                Height="40"
-                Background="White"
-                Command="{Binding Ajouter}"
-                Content="Ajouter"
-                Foreground="Black" />
+            <StackPanel
+                Width="750"
+                Height="750"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="10">
+                <Button
+                    x:Name="Modifier"
+                    Width="150"
+                    Height="40"
+                    Background="White"
+                    Command="{Binding Modifier}"
+                    Content="Modifier"
+                    Foreground="Black" />
+                <Button
+                    x:Name="Supprimer"
+                    Width="150"
+                    Height="40"
+                    Background="White"
+                    Command="{Binding Supprimer}"
+                    Content="Supprimer"
+                    Foreground="Black" />
+            </StackPanel>
 
         </StackPanel>
     </Grid>
